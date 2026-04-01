@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SistemaUBS.Application/SistemaUBS.Application.csproj" />
+  <Project Path="SistemaUBS.Domain/SistemaUBS.Domain.csproj" />
+  <Project Path="SistemaUBS.Infrastructure/SistemaUBS.Infrastructure.csproj" />
+  <Project Path="SistemaUBS.UI/SistemaUBS.UI.csproj" Id="ba4fad01-b138-404b-aeba-4d9033c0dde1" />
+</Solution>
