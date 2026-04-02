@@ -6,6 +6,8 @@ public class Paciente
     public string Nome { get; private set; }
     public int UsuarioId { get; private set; }
 
+    private Paciente() { }
+
     public Paciente(string nome, int usuarioId)
     {
         Nome = nome;

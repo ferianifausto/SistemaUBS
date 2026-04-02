@@ -11,6 +11,8 @@ public class Consulta
     public int MedicoId { get; private set; }
     public DateTime Data { get; private set; }
 
+    private Consulta() { }
+
     public Consulta(int pacienteId, int medicoId, DateTime data)
     {
         PacienteId = pacienteId;

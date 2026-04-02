@@ -10,8 +10,10 @@ public class Exame
     public int PacienteId { get; private set; }
     public int MedicoId { get; private set; }
     public string Descricao { get; private set; }
-    public string Resultado { get; private set; }
+    public string? Resultado { get; private set; }
     public DateTime Data { get; private set; }
+
+    private Exame() { }
 
     public Exame(int pacienteId, int medicoId, string descricao, DateTime data)
     {
@@ -20,6 +22,7 @@ public class Exame
         Descricao = descricao;
         Data = data;
     }
+
 
     public void DefinirResultado(string resultado)
     {

@@ -6,12 +6,15 @@ namespace SistemaUBS.Domain.Entities;
 public class Usuario //Classe usuário
 {
     public int Id { get; private set; }
-    public string Login { get; private set; }
+    public string Login { get; private set; } 
     public string SenhaHash  { get; private set; }
     public string Tipo { get; private set; }
     public bool Ativo { get; private set; }
     public DateTime DataCadastro { get; private set; }
 
+
+    // Para o EF
+    private Usuario() { }
 
     public Usuario(string login, string senha, string tipo)
     {
@@ -20,7 +23,6 @@ public class Usuario //Classe usuário
         Tipo = tipo;
         Ativo = true;
         DataCadastro = DateTime.Now;
-
     }
 
 

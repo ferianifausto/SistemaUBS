@@ -4,56 +4,28 @@ using SistemaUBS.Domain.Interfaces;
 
 namespace SistemaUBS.Infrastructure.Repositories;
 
+using Microsoft.EntityFrameworkCore;
+using SistemaUBS.Infrastructure.Config;
+
 public class UsuarioRepository : IUsuarioRepository
 {
-    private readonly string _connectionString;
+    private readonly AppDbContext _context;
 
-    public UsuarioRepository(string connectionString)
+    public UsuarioRepository(AppDbContext context)
     {
-        _connectionString = connectionString;
+        _context = context;
     }
 
     public async Task<Usuario?> ObterPorLoginAsync(string login)
     {
-        const string sql = "SELECT Id, Login, Senha, Tipo FROM Usuarios WHERE Login = @Login";
-
-        using var connection = new SqlConnection(_connectionString);
-        using var command = new SqlCommand(sql, connection);
-
-        command.Parameters.AddWithValue("@Login", login);
-
-        await connection.OpenAsync();
-        using var reader = await command.ExecuteReaderAsync();
-
-        if (await reader.ReadAsync())
-        {
-            return new Usuario(
-                reader.GetString(1),
-                reader.GetString(2),
-                reader.GetString(3)
-            );
-        }
-
-        return null;
+        return await _context.Usuarios
+            .FirstOrDefaultAsync(u => u.Login == login);
     }
 
     public async Task<Usuario> AdicionarAsync(Usuario usuario)
     {
-        const string sql = @"INSERT INTO Usuarios (Login, Senha, Tipo)
-                             VALUES (@Login, @Senha, @Tipo);
-                             SELECT SCOPE_IDENTITY();";
-
-        using var connection = new SqlConnection(_connectionString);
-        using var command = new SqlCommand(sql, connection);
-
-        command.Parameters.AddWithValue("@Login", usuario.Login);
-        command.Parameters.AddWithValue("@Senha", usuario.SenhaHash);
-        command.Parameters.AddWithValue("@Tipo", usuario.Tipo);
-
-        await connection.OpenAsync();
-        var id = await command.ExecuteScalarAsync();
-
-        usuario.GetType().GetProperty("Id")?.SetValue(usuario, Convert.ToInt32(id));
+        _context.Usuarios.Add(usuario);
+        await _context.SaveChangesAsync();
         return usuario;
     }
 }

@@ -11,6 +11,8 @@ public class Medico
     public string Especialidade { get; private set; }
     public int UsuarioId { get; private set; }
 
+    private Medico() { }
+
     public Medico(string nome, string especialidade, int usuarioId)
     {
         Nome = nome;

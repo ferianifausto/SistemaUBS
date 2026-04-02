@@ -4,35 +4,21 @@ using SistemaUBS.Domain.Interfaces;
 
 namespace SistemaUBS.Infrastructure.Repositories;
 
+using Microsoft.EntityFrameworkCore;
+using SistemaUBS.Infrastructure.Config;
+
 public class PacienteRepository : IPacienteRepository
 {
-    private readonly string _connectionString;
+    private readonly AppDbContext _context;
 
-    public PacienteRepository(string connectionString)
+    public PacienteRepository(AppDbContext context)
     {
-        _connectionString = connectionString;
+        _context = context;
     }
 
     public async Task<Paciente?> ObterPorUsuarioIdAsync(int usuarioId)
     {
-        const string sql = "SELECT Id, Nome, UsuarioId FROM Pacientes WHERE UsuarioId = @UsuarioId";
-
-        using var connection = new SqlConnection(_connectionString);
-        using var command = new SqlCommand(sql, connection);
-
-        command.Parameters.AddWithValue("@UsuarioId", usuarioId);
-
-        await connection.OpenAsync();
-        using var reader = await command.ExecuteReaderAsync();
-
-        if (await reader.ReadAsync())
-        {
-            return new Paciente(
-                reader.GetString(1),
-                reader.GetInt32(2)
-            );
-        }
-
-        return null;
+        return await _context.Pacientes
+            .FirstOrDefaultAsync(p => p.UsuarioId == usuarioId);
     }
 }
