@@ -1,0 +1,11 @@
+{
+  "solution": {
+    "path": "SistemaUBS.slnx",
+    "projects": [
+      "SistemaUBS.Application\\SistemaUBS.Application.csproj",
+      "SistemaUBS.Domain\\SistemaUBS.Domain.csproj",
+      "SistemaUBS.Infrastructure\\SistemaUBS.Infrastructure.csproj",
+      "SistemaUBS.UI\\SistemaUBS.UI.csproj"
+    ]
+  }
+}

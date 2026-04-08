@@ -6,15 +6,14 @@ namespace SistemaUBS.Domain.Entities;
 
 public class Exame
 {
-    public int Id { get; private set; }
-    public int PacienteId { get; private set; }
-    public int MedicoId { get; private set; }
-    public string Descricao { get; private set; }
-    public string? Resultado { get; private set; }
-    public DateTime Data { get; private set; }
+    public int Id { get; set; }
+    public int PacienteId { get; set; }
+    public int MedicoId { get; set; }
+    public string Descricao { get; set; }
+    public string? Resultado { get; set; }
+    public DateTime Data { get; set; }
 
-    private Exame() { }
-
+    public Exame() { }
     public Exame(int pacienteId, int medicoId, string descricao, DateTime data)
     {
         PacienteId = pacienteId;
@@ -47,5 +46,9 @@ public class Exame
         return erros;
     }
 
+    public bool EhValido()
+    {
+        return Validar().Count == 0;
+    }
 
 }

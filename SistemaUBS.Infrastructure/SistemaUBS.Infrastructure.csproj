@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaUBS.Application\SistemaUBS.Application.csproj" />
     <ProjectReference Include="..\SistemaUBS.Domain\SistemaUBS.Domain.csproj" />
   </ItemGroup>
 

@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SistemaUBS.Application\SistemaUBS.Application.csproj" />
-    <ProjectReference Include="..\SistemaUBS.Infrastructure\SistemaUBS.Infrastructure.csproj" />
+	  
+	  <ProjectReference Include="..\SistemaUBS.Application\SistemaUBS.Application.csproj" />
+	  <ProjectReference Include="..\SistemaUBS.Domain\SistemaUBS.Domain.csproj" />
+	  <ProjectReference Include="..\SistemaUBS.Infrastructure\SistemaUBS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

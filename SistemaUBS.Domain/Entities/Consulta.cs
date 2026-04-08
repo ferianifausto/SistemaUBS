@@ -6,12 +6,13 @@ namespace SistemaUBS.Domain.Entities;
 
 public class Consulta
 {
-    public int Id { get; private set; }
-    public int PacienteId { get; private set; }
-    public int MedicoId { get; private set; }
-    public DateTime Data { get; private set; }
+    public int Id { get; set; }
+    public int PacienteId { get; set; }
+    public int MedicoId { get; set; }
+    public string? Diagnostico { get; set; }
+    public DateTime Data { get; set; }
 
-    private Consulta() { }
+    public Consulta() { }
 
     public Consulta(int pacienteId, int medicoId, DateTime data)
     {
@@ -34,5 +35,10 @@ public class Consulta
             erros.Add("A data de cadastro não pode ser futura");
 
         return erros;
+    }
+
+    public bool EhValido()
+    {
+        return Validar().Count == 0;
     }
 }

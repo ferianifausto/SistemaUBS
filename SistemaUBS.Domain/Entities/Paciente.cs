@@ -2,12 +2,12 @@
 
 public class Paciente
 {
-    public int Id { get; private set; }
-    public string Nome { get; private set; }
-    public int UsuarioId { get; private set; }
+    public int Id { get; set; }
+    public string Nome { get; set; }
+    public int UsuarioId { get; set; }
 
-    private Paciente() { }
 
+    public Paciente() { }
     public Paciente(string nome, int usuarioId)
     {
         Nome = nome;
@@ -22,5 +22,9 @@ public class Paciente
             erros.Add("Login é obrigatório");
 
         return erros;
+    }
+    public bool EhValido()
+    {
+        return Validar().Count == 0;
     }
 }

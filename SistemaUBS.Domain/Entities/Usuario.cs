@@ -1,21 +1,17 @@
 ﻿using SistemaUBS.Domain.Constants;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SistemaUBS.Domain.Entities;
 
 public class Usuario //Classe usuário
 {
-    public int Id { get; private set; }
-    public string Login { get; private set; } 
-    public string SenhaHash  { get; private set; }
-    public string Tipo { get; private set; }
-    public bool Ativo { get; private set; }
-    public DateTime DataCadastro { get; private set; }
+    public int Id { get; set; }
+    public string Login { get; set; }
+    public string SenhaHash { get; set; }
+    public string Tipo { get; set; }
+    public bool Ativo { get; set; }
+    public DateTime DataCadastro { get; set; }
 
-
-    // Para o EF
-    private Usuario() { }
-
+    public Usuario() { }
     public Usuario(string login, string senha, string tipo)
     {
         Login = login;
@@ -41,9 +37,14 @@ public class Usuario //Classe usuário
 
         if (DataCadastro > DateTime.Now)
             erros.Add("A data de cadastro não pode ser futura");
-        
+
 
         return erros;
+    }
+
+    public bool EhValido()
+    {
+        return Validar().Count == 0;
     }
 
     public bool ValidarSenha(string senhaDigitada)

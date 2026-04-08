@@ -1,39 +1,39 @@
 namespace SistemaUBS.UI;
 
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using SistemaUBS.Infrastructure.Config;
 using System;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using SistemaUBS.Application.Services;
+using SistemaUBS.Infrastructure.Repositories;
+using SistemaUBS.UI.Forms;
 
-
-
-internal class Program
+internal static class Program
 {
-    static async Task Main()
+    [STAThread]
+    static void Main()
     {
-        Console.WriteLine("Sistema iniciado");
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
 
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseSqlServer("Server=SMP0581301W10-1;Database=UBS;Trusted_Connection=True;TrustServerCertificate=True;")
-            .Options;
+        var usuarioRepository = new UsuarioRepository();
+        var pacienteRepository = new PacienteRepository();
+        var medicoRepository = new MedicoRepository();
+        var consultaRepository = new ConsultaRepository();
+        var exameRepository = new ExameRepository();
 
-        var context = new AppDbContext(options);
+        var usuarioService = new UsuarioService(usuarioRepository);
+        var pacienteService = new PacienteService(
+            pacienteRepository,
+            consultaRepository,
+            exameRepository);
 
-        try
-        {
-            // Testa conexão via EF
-            var conectado = await context.Database.CanConnectAsync();
+        var medicoService = new MedicoService(
+            medicoRepository,
+            consultaRepository,
+            exameRepository);
 
-            if (conectado)
-                Console.WriteLine("Conectou com sucesso 🔥");
-            else
-                Console.WriteLine("Não conseguiu conectar");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Erro ao conectar:");
-            Console.WriteLine(ex.Message);
-        }
+        Application.Run(new FormLogin(
+            usuarioService,
+            pacienteService,
+            medicoService));
     }
 }

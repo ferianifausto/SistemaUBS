@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Data.SqlClient;
 
-namespace SistemaUBS.Infrastructure
+namespace SistemaUBS.Infrastructure;
+
+public static class DbConnectionFactory
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Design;
-    using SistemaUBS.Infrastructure.Config;
+    private static string connectionString =
+        "Server=localhost\\SQLEXPRESS;Database=SistemaUBS;Trusted_Connection=True;TrustServerCertificate=True;";
 
-    public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    public static SqlConnection Create()
     {
-        public AppDbContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-
-            optionsBuilder.UseSqlServer(
-                "Server=SMP0581301W10-1;Database=UBS;Trusted_Connection=True;TrustServerCertificate=True;"
-            );
-
-            return new AppDbContext(optionsBuilder.Options);
-        }
+        return new SqlConnection(connectionString);
     }
 }

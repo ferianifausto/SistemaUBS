@@ -6,13 +6,12 @@ namespace SistemaUBS.Domain.Entities;
 
 public class Medico
 {
-    public int Id { get; private set; }
-    public string Nome { get; private set; }
-    public string Especialidade { get; private set; }
-    public int UsuarioId { get; private set; }
+    public int Id { get; set; }
+    public string Nome { get; set; }
+    public string Especialidade { get; set; }
+    public int UsuarioId { get; set; }
 
-    private Medico() { }
-
+    public Medico() { }
     public Medico(string nome, string especialidade, int usuarioId)
     {
         Nome = nome;
@@ -31,5 +30,10 @@ public class Medico
             erros.Add("A especialidade é obrigatória");
 
         return erros;
+    }
+
+    public bool EhValido()
+    {
+        return Validar().Count == 0;
     }
 }
