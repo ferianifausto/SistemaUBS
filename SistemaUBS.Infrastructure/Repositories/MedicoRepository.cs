@@ -2,6 +2,7 @@
 using SistemaUBS.Domain.Entities;
 using SistemaUBS.Application.Interfaces;
 using SistemaUBS.Infrastructure;
+namespace SistemaUBS.Infrastructure.Repositories;
 
 public class MedicoRepository : IMedicoRepository
 {

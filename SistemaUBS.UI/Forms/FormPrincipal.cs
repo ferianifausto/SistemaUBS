@@ -14,25 +14,29 @@ public partial class FormPrincipal : Form
     [DllImport("user32.dll")]
     public static extern bool ReleaseCapture();
 
-    private readonly Form formLoginRef;
-    private Form? activeForm = null;
+    private readonly Form _formLoginRef;
     private readonly Usuario _usuarioLogado;
+    private Form? _activeForm;
 
     public FormPrincipal(Form loginForm, Usuario usuario)
     {
         InitializeComponent();
 
-        formLoginRef = loginForm;
+        _formLoginRef = loginForm;
         _usuarioLogado = usuario;
 
+        ConfigurarJanela();
+        ConfigurarMenuUsuario();
+    }
+
+    private void ConfigurarJanela()
+    {
         FormBorderStyle = FormBorderStyle.None;
         StartPosition = FormStartPosition.CenterScreen;
         Size = new Size(1000, 600);
-
-        SetupUserMenu();
     }
 
-    private void SetupUserMenu()
+    private void ConfigurarMenuUsuario()
     {
         lblUserName.Text = $"Olá, {_usuarioLogado.Login}";
 
@@ -44,22 +48,22 @@ public partial class FormPrincipal : Form
         {
             btnAreaPaciente.Visible = true;
             btnConsultasExames.Visible = true;
-            OpenChildForm(new FormPaciente(_usuarioLogado));
+            AbrirFormFilho(new FormPaciente(_usuarioLogado));
         }
         else if (_usuarioLogado.Tipo == "Medico")
         {
             btnAreaMedico.Visible = true;
             btnConsultasExames.Visible = true;
-            OpenChildForm(new FormMedico(_usuarioLogado));
+            AbrirFormFilho(new FormMedico(_usuarioLogado));
         }
     }
 
-    private void OpenChildForm(Form childForm)
+    private void AbrirFormFilho(Form childForm)
     {
-        if (activeForm != null)
-            activeForm.Close();
+        if (_activeForm != null)
+            _activeForm.Close();
 
-        activeForm = childForm;
+        _activeForm = childForm;
         childForm.TopLevel = false;
         childForm.FormBorderStyle = FormBorderStyle.None;
         childForm.Dock = DockStyle.Fill;
@@ -76,23 +80,23 @@ public partial class FormPrincipal : Form
 
     private void btnAreaPaciente_Click(object sender, EventArgs e)
     {
-        OpenChildForm(new FormPaciente(_usuarioLogado));
+        AbrirFormFilho(new FormPaciente(_usuarioLogado));
     }
 
     private void btnAreaMedico_Click(object sender, EventArgs e)
     {
-        OpenChildForm(new FormMedico(_usuarioLogado));
+        AbrirFormFilho(new FormMedico(_usuarioLogado));
     }
 
     private void btnConsultasExames_Click(object sender, EventArgs e)
     {
-        OpenChildForm(new FormConsultasExames(_usuarioLogado));
+        AbrirFormFilho(new FormConsultasExames(_usuarioLogado));
     }
 
     private void btnLogout_Click(object sender, EventArgs e)
     {
         Close();
-        formLoginRef.Show();
+        _formLoginRef.Show();
     }
 
     private void panelTop_MouseDown(object sender, MouseEventArgs e)

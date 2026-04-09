@@ -1,5 +1,6 @@
 ﻿using SistemaUBS.Application.Services;
 using SistemaUBS.Domain.Entities;
+using SistemaUBS.Infrastructure.Repositories;
 
 namespace SistemaUBS.UI.Forms;
 
@@ -7,47 +8,73 @@ public partial class FormPaciente : Form
 {
     private readonly Usuario _usuarioLogado;
     private readonly PacienteService _pacienteService;
-    private readonly ConsultaService _consultaService;
 
-    public FormPaciente(
-        Usuario usuario,
-        PacienteService pacienteService,
-        ConsultaService consultaService)
+    private Paciente? _paciente;
+
+    public FormPaciente(Usuario usuario)
     {
         InitializeComponent();
 
         _usuarioLogado = usuario;
-        _pacienteService = pacienteService;
-        _consultaService = consultaService;
+        _pacienteService = new PacienteService(
+            new PacienteRepository(),
+            new ConsultaRepository(),
+            new ExameRepository());
 
-        BackColor = Color.FromArgb(245, 246, 250);
-        Text = "Área do Paciente";
-
-        CarregarDados();
+        ConfigurarTela();
+        Load += FormPaciente_Load;
     }
 
-    private async void CarregarDados()
+    private void ConfigurarTela()
     {
-        var paciente = await _pacienteService.ObterPorUsuarioId(_usuarioLogado.Id);
+        BackColor = Color.FromArgb(245, 246, 250);
+        Text = "Área do Paciente";
+    }
 
-        if (paciente == null)
+    private async void FormPaciente_Load(object? sender, EventArgs e)
+    {
+        await InicializarDados();
+    }
+
+    private async Task InicializarDados()
+    {
+        _paciente = await _pacienteService.ObterPorUsuarioId(_usuarioLogado.Id);
+
+        if (_paciente == null)
         {
             MessageBox.Show("Paciente não encontrado.", "Erro",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
-        lblNome.Text = paciente.Nome;
+        lblNome.Text = _paciente.Nome;
         lblEmail.Text = _usuarioLogado.Login;
 
-        var consultas = await _consultaService.ObterPorPaciente(paciente.Id);
+        await CarregarConsultas();
+    }
 
-        dgvConsultas.DataSource = null;
-        dgvConsultas.DataSource = consultas.Select(c => new
+    private async Task CarregarConsultas()
+    {
+        try
         {
-            MedicoId = c.MedicoId,
-            DataHora = c.Data.ToString("dd/MM/yyyy HH:mm"),
-            Diagnostico = c.Diagnostico
-        }).ToList();
+            var consultas = await _pacienteService.ObterConsultasPorUsuarioId(_usuarioLogado.Id);
+
+            dgvConsultas.DataSource = null;
+            dgvConsultas.DataSource = consultas.Select(c => new
+            {
+                Id = c.Id,
+                MedicoId = c.MedicoId,
+                DataHora = c.Data.ToString("dd/MM/yyyy HH:mm"),
+                Diagnostico = c.Diagnostico
+            }).ToList();
+
+            if (dgvConsultas.Columns["Id"] != null)
+                dgvConsultas.Columns["Id"].Visible = false;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Erro ao carregar consultas: {ex.Message}", "Erro",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }

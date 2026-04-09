@@ -31,9 +31,6 @@ internal static class Program
             consultaRepository,
             exameRepository);
 
-        Application.Run(new FormLogin(
-            usuarioService,
-            pacienteService,
-            medicoService));
+        Application.Run(new FormLogin());
     }
 }

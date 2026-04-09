@@ -30,6 +30,9 @@ partial class FormCadastro
         this.lblTipo = new System.Windows.Forms.Label();
         this.cmbTipo = new System.Windows.Forms.ComboBox();
 
+        this.lblEspecialidade = new System.Windows.Forms.Label();
+        this.txtEspecialidade = new System.Windows.Forms.TextBox();
+
         this.btnCadastrar = new System.Windows.Forms.Button();
         this.btnVoltar = new System.Windows.Forms.Button();
 
@@ -40,6 +43,8 @@ partial class FormCadastro
         this.panelCentral.BackColor = System.Drawing.Color.White;
         this.panelCentral.Controls.Add(this.btnVoltar);
         this.panelCentral.Controls.Add(this.btnCadastrar);
+        this.panelCentral.Controls.Add(this.txtEspecialidade);
+        this.panelCentral.Controls.Add(this.lblEspecialidade);
         this.panelCentral.Controls.Add(this.cmbTipo);
         this.panelCentral.Controls.Add(this.lblTipo);
         this.panelCentral.Controls.Add(this.txtSenha);
@@ -49,15 +54,15 @@ partial class FormCadastro
         this.panelCentral.Controls.Add(this.txtNome);
         this.panelCentral.Controls.Add(this.lblNome);
         this.panelCentral.Controls.Add(this.lblTitulo);
-        this.panelCentral.Location = new System.Drawing.Point(50, 40);
+        this.panelCentral.Location = new System.Drawing.Point(50, 20);
         this.panelCentral.Name = "panelCentral";
-        this.panelCentral.Size = new System.Drawing.Size(300, 420);
+        this.panelCentral.Size = new System.Drawing.Size(300, 460);
         this.panelCentral.TabIndex = 0;
 
         // lblTitulo
         this.lblTitulo.AutoSize = true;
         this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-        this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(58)))), ((int)(((byte)(90)))));
+        this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(26, 58, 90);
         this.lblTitulo.Location = new System.Drawing.Point(85, 20);
         this.lblTitulo.Name = "lblTitulo";
         this.lblTitulo.Size = new System.Drawing.Size(129, 30);
@@ -134,17 +139,35 @@ partial class FormCadastro
         this.cmbTipo.Name = "cmbTipo";
         this.cmbTipo.Size = new System.Drawing.Size(240, 28);
         this.cmbTipo.TabIndex = 8;
+        this.cmbTipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipo_SelectedIndexChanged);
+
+        // lblEspecialidade
+        this.lblEspecialidade.AutoSize = true;
+        this.lblEspecialidade.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        this.lblEspecialidade.ForeColor = System.Drawing.Color.Gray;
+        this.lblEspecialidade.Location = new System.Drawing.Point(30, 325);
+        this.lblEspecialidade.Name = "lblEspecialidade";
+        this.lblEspecialidade.Size = new System.Drawing.Size(92, 19);
+        this.lblEspecialidade.TabIndex = 9;
+        this.lblEspecialidade.Text = "Especialidade";
+
+        // txtEspecialidade
+        this.txtEspecialidade.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        this.txtEspecialidade.Location = new System.Drawing.Point(30, 350);
+        this.txtEspecialidade.Name = "txtEspecialidade";
+        this.txtEspecialidade.Size = new System.Drawing.Size(240, 29);
+        this.txtEspecialidade.TabIndex = 10;
 
         // btnCadastrar
-        this.btnCadastrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+        this.btnCadastrar.BackColor = System.Drawing.Color.FromArgb(41, 128, 185);
         this.btnCadastrar.FlatAppearance.BorderSize = 0;
         this.btnCadastrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
         this.btnCadastrar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
         this.btnCadastrar.ForeColor = System.Drawing.Color.White;
-        this.btnCadastrar.Location = new System.Drawing.Point(30, 335);
+        this.btnCadastrar.Location = new System.Drawing.Point(30, 390);
         this.btnCadastrar.Name = "btnCadastrar";
         this.btnCadastrar.Size = new System.Drawing.Size(240, 40);
-        this.btnCadastrar.TabIndex = 9;
+        this.btnCadastrar.TabIndex = 11;
         this.btnCadastrar.Text = "CADASTRAR";
         this.btnCadastrar.UseVisualStyleBackColor = false;
         this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
@@ -154,10 +177,10 @@ partial class FormCadastro
         this.btnVoltar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
         this.btnVoltar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
         this.btnVoltar.ForeColor = System.Drawing.Color.Gray;
-        this.btnVoltar.Location = new System.Drawing.Point(30, 380);
+        this.btnVoltar.Location = new System.Drawing.Point(30, 430);
         this.btnVoltar.Name = "btnVoltar";
-        this.btnVoltar.Size = new System.Drawing.Size(240, 30);
-        this.btnVoltar.TabIndex = 10;
+        this.btnVoltar.Size = new System.Drawing.Size(240, 25);
+        this.btnVoltar.TabIndex = 12;
         this.btnVoltar.Text = "Voltar ao Login";
         this.btnVoltar.UseVisualStyleBackColor = true;
         this.btnVoltar.Click += new System.EventHandler(this.btnVoltar_Click);
@@ -184,6 +207,8 @@ partial class FormCadastro
     private System.Windows.Forms.TextBox txtSenha;
     private System.Windows.Forms.Label lblTipo;
     private System.Windows.Forms.ComboBox cmbTipo;
+    private System.Windows.Forms.Label lblEspecialidade;
+    private System.Windows.Forms.TextBox txtEspecialidade;
     private System.Windows.Forms.Button btnCadastrar;
     private System.Windows.Forms.Button btnVoltar;
 }
