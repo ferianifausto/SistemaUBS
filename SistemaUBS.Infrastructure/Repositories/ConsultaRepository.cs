@@ -159,7 +159,8 @@ public class ConsultaRepository : IConsultaRepository
         cmd.Parameters.AddWithValue("@PacienteId", consulta.PacienteId);
         cmd.Parameters.AddWithValue("@MedicoId", consulta.MedicoId);
         cmd.Parameters.AddWithValue("@Data", consulta.Data);
-       
+        cmd.Parameters.AddWithValue("@Diagnostico", (object?)consulta.Diagnostico ?? DBNull.Value);
+
 
         await cmd.ExecuteNonQueryAsync();
     }

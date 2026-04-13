@@ -13,7 +13,7 @@ public class ExameRepository : IExameRepository
         using var conn = DbConnectionFactory.Create();
         await conn.OpenAsync();
 
-        var query = @"SELECT Id, PacienteId, MedicoId, Data, Resultado
+        var query = @"SELECT Id, NomeExame, PacienteId, MedicoId, Data, Resultado, Descricao
                       FROM Exames";
 
         using var cmd = new SqlCommand(query, conn);
@@ -24,10 +24,12 @@ public class ExameRepository : IExameRepository
             var exame = new Exame
             {
                 Id = reader.GetInt32(0),
-                PacienteId = reader.GetInt32(1),
-                MedicoId = reader.GetInt32(2),
-                Data = reader.GetDateTime(3),
-                Resultado = reader.IsDBNull(4) ? null : reader.GetString(4)
+                NomeExame = reader.GetString(1),
+                PacienteId = reader.GetInt32(2),
+                MedicoId = reader.GetInt32(3),
+                Data = reader.GetDateTime(4),
+                Resultado = reader.IsDBNull(5) ? null : reader.GetString(5),
+                Descricao = reader.IsDBNull(6) ? null : reader.GetString(6)
             };
 
             lista.Add(exame);
@@ -42,16 +44,19 @@ public class ExameRepository : IExameRepository
         await conn.OpenAsync();
 
         var query = @"INSERT INTO Exames 
-                      (PacienteId, MedicoId, Data, Resultado)
-                      VALUES (@PacienteId, @MedicoId, @Data, @Resultado)";
+                      (NomeExame, PacienteId, MedicoId, Data, Resultado, Descricao)
+                      VALUES (@NomeExame, @PacienteId, @MedicoId, @Data, @Resultado, @Descricao)";
 
         using var cmd = new SqlCommand(query, conn);
-
+        
+        cmd.Parameters.AddWithValue("@NomeExame", exame.NomeExame);
         cmd.Parameters.AddWithValue("@PacienteId", exame.PacienteId);
         cmd.Parameters.AddWithValue("@MedicoId", exame.MedicoId);
         cmd.Parameters.AddWithValue("@Data", exame.Data);
         cmd.Parameters.AddWithValue("@Resultado",
             (object?)exame.Resultado ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@Descricao",
+            (object?)exame.Descricao ?? DBNull.Value);
 
         await cmd.ExecuteNonQueryAsync();
     }
@@ -61,7 +66,7 @@ public class ExameRepository : IExameRepository
         using var conn = DbConnectionFactory.Create();
         await conn.OpenAsync();
 
-        var query = @"SELECT Id, PacienteId, MedicoId, Data, Resultado
+        var query = @"SELECT Id, NomeExame, PacienteId, MedicoId, Data, Resultado, Descricao
                       FROM Exames
                       WHERE Id = @Id";
 
@@ -75,10 +80,12 @@ public class ExameRepository : IExameRepository
             return new Exame
             {
                 Id = reader.GetInt32(0),
-                PacienteId = reader.GetInt32(1),
-                MedicoId = reader.GetInt32(2),
-                Data = reader.GetDateTime(3),
-                Resultado = reader.IsDBNull(4) ? null : reader.GetString(4)
+                NomeExame = reader.GetString(1),
+                PacienteId = reader.GetInt32(2),
+                MedicoId = reader.GetInt32(3),
+                Data = reader.GetDateTime(4),
+                Resultado = reader.IsDBNull(5) ? null : reader.GetString(5),
+                Descricao = reader.IsDBNull(6) ? null : reader.GetString(6)
             };
         }
 
@@ -92,7 +99,7 @@ public class ExameRepository : IExameRepository
         using var conn = DbConnectionFactory.Create();
         await conn.OpenAsync();
 
-        var query = @"SELECT Id, PacienteId, MedicoId, Data, Resultado
+        var query = @"SELECT Id, NomeExame, PacienteId, MedicoId, Data, Resultado, Descricao
                   FROM Exames
                   WHERE PacienteId = @PacienteId";
 
@@ -106,10 +113,12 @@ public class ExameRepository : IExameRepository
             lista.Add(new Exame
             {
                 Id = reader.GetInt32(0),
-                PacienteId = reader.GetInt32(1),
-                MedicoId = reader.GetInt32(2),
-                Data = reader.GetDateTime(3),
-                Resultado = reader.IsDBNull(4) ? null : reader.GetString(4)
+                NomeExame = reader.GetString(1),
+                PacienteId = reader.GetInt32(2),
+                MedicoId = reader.GetInt32(3),
+                Data = reader.GetDateTime(4),
+                Resultado = reader.IsDBNull(5) ? null : reader.GetString(5),
+                Descricao = reader.IsDBNull(6) ? null : reader.GetString(6)
             });
         }
 
@@ -122,20 +131,25 @@ public class ExameRepository : IExameRepository
         await conn.OpenAsync();
 
         var query = @"UPDATE Exames
-                      SET PacienteId = @PacienteId,
+                      SET NomeExame = @NomeExame,
+                          PacienteId = @PacienteId,
                           MedicoId = @MedicoId,
                           Data = @Data,
-                          Resultado = @Resultado
+                          Resultado = @Resultado,
+                          Descricao = @Descricao
                       WHERE Id = @Id";
 
         using var cmd = new SqlCommand(query, conn);
 
         cmd.Parameters.AddWithValue("@Id", exame.Id);
+        cmd.Parameters.AddWithValue("@NomeExame", exame.NomeExame);
         cmd.Parameters.AddWithValue("@PacienteId", exame.PacienteId);
         cmd.Parameters.AddWithValue("@MedicoId", exame.MedicoId);
         cmd.Parameters.AddWithValue("@Data", exame.Data);
         cmd.Parameters.AddWithValue("@Resultado",
             (object?)exame.Resultado ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@Descricao",
+            (object?)exame.Descricao ?? DBNull.Value);
 
         await cmd.ExecuteNonQueryAsync();
     }

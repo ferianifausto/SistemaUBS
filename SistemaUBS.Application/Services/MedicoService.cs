@@ -57,7 +57,7 @@ public class MedicoService
         await _consultaRepo.AtualizarAsync(consulta);
     }
 
-    public async Task AdicionarExame(int usuarioId, int consultaId, DateTime data, string? resultado)
+    public async Task AdicionarExame(int usuarioId, int consultaId, DateTime data, string? resultado, string? descricao)
     {
         var medico = await _medicoRepo.ObterPorUsuarioIdAsync(usuarioId);
 
@@ -77,7 +77,8 @@ public class MedicoService
             PacienteId = consulta.PacienteId,
             MedicoId = consulta.MedicoId,
             Data = data,
-            Resultado = resultado
+            Resultado = resultado,
+            Descricao = descricao
         };
 
         await _exameRepo.InserirAsync(exame);

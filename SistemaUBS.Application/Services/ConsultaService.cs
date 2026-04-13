@@ -5,6 +5,7 @@ namespace SistemaUBS.Application.Services;
 
 public class ConsultaService
 {
+
     private readonly IConsultaRepository _consultaRepo;
 
     public ConsultaService(IConsultaRepository consultaRepo)
@@ -22,13 +23,14 @@ public class ConsultaService
         return await _consultaRepo.ObterPorMedicoIdAsync(medicoId);
     }
 
-    public async Task Inserir(int pacienteId, int medicoId, DateTime data)
+    public async Task Inserir(int pacienteId, int medicoId, DateTime data, string? diagnostico)
     {
         var consulta = new Consulta
         {
             PacienteId = pacienteId,
             MedicoId = medicoId,
-            Data = data
+            Data = data,
+            Diagnostico = diagnostico   
         };
 
         await _consultaRepo.InserirAsync(consulta);

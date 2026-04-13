@@ -12,14 +12,16 @@ public class Exame
     public string Descricao { get; set; }
     public string? Resultado { get; set; }
     public DateTime Data { get; set; }
+    public string NomeExame { get; set; } = string.Empty;
 
     public Exame() { }
-    public Exame(int pacienteId, int medicoId, string descricao, DateTime data)
+    public Exame(int pacienteId, int medicoId, string descricao, DateTime data, string nomeExame)
     {
         PacienteId = pacienteId;
         MedicoId = medicoId;
         Descricao = descricao;
         Data = data;
+        NomeExame = nomeExame;
     }
 
 

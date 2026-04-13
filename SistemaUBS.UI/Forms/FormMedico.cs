@@ -50,6 +50,8 @@ public partial class FormMedico : Form
             return;
         }
 
+        lblCRM.Text = _medico.CRM;
+        lblEspecialidade.Text = _medico.Especialidade;
         lblNome.Text = _medico.Nome;
         await CarregarConsultas();
     }

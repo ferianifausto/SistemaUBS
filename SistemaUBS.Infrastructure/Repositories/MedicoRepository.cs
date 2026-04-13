@@ -13,7 +13,7 @@ public class MedicoRepository : IMedicoRepository
         using var conn = DbConnectionFactory.Create();
         await conn.OpenAsync();
 
-        var query = "SELECT Id, Nome, UsuarioId, Especialidade FROM Medicos";
+        var query = "SELECT Id, Nome, UsuarioId, Especialidade, CRM FROM Medicos";
 
         using var cmd = new SqlCommand(query, conn);
         using var reader = await cmd.ExecuteReaderAsync();
@@ -25,7 +25,8 @@ public class MedicoRepository : IMedicoRepository
                 Id = reader.GetInt32(0),
                 Nome = reader.GetString(1),
                 UsuarioId = reader.GetInt32(2),
-                Especialidade = reader.GetString(3)
+                Especialidade = reader.GetString(3),
+                CRM = reader.GetString(4)
             });
         }
 
@@ -37,7 +38,7 @@ public class MedicoRepository : IMedicoRepository
         using var conn = DbConnectionFactory.Create();
         await conn.OpenAsync();
 
-        var query = @"SELECT Id, Nome, UsuarioId, Especialidade
+        var query = @"SELECT Id, Nome, UsuarioId, Especialidade, CRM
                       FROM Medicos
                       WHERE UsuarioId = @UsuarioId";
 
@@ -53,7 +54,9 @@ public class MedicoRepository : IMedicoRepository
                 Id = reader.GetInt32(0),
                 Nome = reader.GetString(1),
                 UsuarioId = reader.GetInt32(2),
-                Especialidade = reader.GetString(3)
+                Especialidade = reader.GetString(3), 
+                CRM = reader.GetString(4)
+                
             };
         }
 
@@ -65,13 +68,14 @@ public class MedicoRepository : IMedicoRepository
         using var conn = DbConnectionFactory.Create();
         await conn.OpenAsync();
 
-        var query = @"INSERT INTO Medicos (Nome, UsuarioId, Especialidade)
-                      VALUES (@Nome, @UsuarioId, @Especialidade)";
+        var query = @"INSERT INTO Medicos (Nome, UsuarioId, Especialidade, CRM)
+                      VALUES (@Nome, @UsuarioId, @Especialidade, @CRM)";
 
         using var cmd = new SqlCommand(query, conn);
         cmd.Parameters.AddWithValue("@Nome", medico.Nome);
         cmd.Parameters.AddWithValue("@UsuarioId", medico.UsuarioId);
         cmd.Parameters.AddWithValue("@Especialidade", medico.Especialidade);
+        cmd.Parameters.AddWithValue("@CRM", medico.CRM);
 
         await cmd.ExecuteNonQueryAsync();
     }

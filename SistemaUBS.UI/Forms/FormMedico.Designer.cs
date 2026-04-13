@@ -15,124 +15,131 @@ partial class FormMedico
 
     private void InitializeComponent()
     {
-        this.panelCard = new System.Windows.Forms.Panel();
-        this.lblTituloCartao = new System.Windows.Forms.Label();
-        this.lblNome = new System.Windows.Forms.Label();
-        this.lblEspecialidade = new System.Windows.Forms.Label();
-        this.lblCRM = new System.Windows.Forms.Label();
-
-        this.lblConsultas = new System.Windows.Forms.Label();
-        this.dgvPacientes = new System.Windows.Forms.DataGridView();
-        this.btnDarDiagnostico = new System.Windows.Forms.Button();
-
-        this.panelCard.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
-        this.SuspendLayout();
-
+        panelCard = new Panel();
+        lblCRM = new Label();
+        lblEspecialidade = new Label();
+        lblNome = new Label();
+        lblTituloCartao = new Label();
+        lblConsultas = new Label();
+        dgvPacientes = new DataGridView();
+        btnDarDiagnostico = new Button();
+        panelCard.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)dgvPacientes).BeginInit();
+        SuspendLayout();
+        // 
         // panelCard
-        this.panelCard.BackColor = System.Drawing.Color.White;
-        this.panelCard.Controls.Add(this.lblCRM);
-        this.panelCard.Controls.Add(this.lblEspecialidade);
-        this.panelCard.Controls.Add(this.lblNome);
-        this.panelCard.Controls.Add(this.lblTituloCartao);
-        this.panelCard.Location = new System.Drawing.Point(30, 30);
-        this.panelCard.Name = "panelCard";
-        this.panelCard.Size = new System.Drawing.Size(350, 150);
-        this.panelCard.TabIndex = 0;
-
-        // lblTituloCartao
-        this.lblTituloCartao.AutoSize = true;
-        this.lblTituloCartao.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-        this.lblTituloCartao.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-        this.lblTituloCartao.Location = new System.Drawing.Point(20, 20);
-        this.lblTituloCartao.Name = "lblTituloCartao";
-        this.lblTituloCartao.Size = new System.Drawing.Size(127, 21);
-        this.lblTituloCartao.TabIndex = 0;
-        this.lblTituloCartao.Text = "Dados Profissionais";
-
-        // lblNome
-        this.lblNome.AutoSize = true;
-        this.lblNome.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        this.lblNome.Location = new System.Drawing.Point(20, 60);
-        this.lblNome.Name = "lblNome";
-        this.lblNome.Size = new System.Drawing.Size(63, 25);
-        this.lblNome.TabIndex = 1;
-        this.lblNome.Text = "Nome";
-
-        // lblEspecialidade
-        this.lblEspecialidade.AutoSize = true;
-        this.lblEspecialidade.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        this.lblEspecialidade.ForeColor = System.Drawing.Color.Gray;
-        this.lblEspecialidade.Location = new System.Drawing.Point(20, 90);
-        this.lblEspecialidade.Name = "lblEspecialidade";
-        this.lblEspecialidade.Size = new System.Drawing.Size(89, 19);
-        this.lblEspecialidade.TabIndex = 2;
-        this.lblEspecialidade.Text = "Especialidade";
-
+        // 
+        panelCard.BackColor = Color.White;
+        panelCard.Controls.Add(lblCRM);
+        panelCard.Controls.Add(lblEspecialidade);
+        panelCard.Controls.Add(lblNome);
+        panelCard.Controls.Add(lblTituloCartao);
+        panelCard.Location = new Point(30, 30);
+        panelCard.Name = "panelCard";
+        panelCard.Size = new Size(350, 150);
+        panelCard.TabIndex = 0;
+        // 
         // lblCRM
-        this.lblCRM.AutoSize = true;
-        this.lblCRM.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        this.lblCRM.ForeColor = System.Drawing.Color.Gray;
-        this.lblCRM.Location = new System.Drawing.Point(20, 115);
-        this.lblCRM.Name = "lblCRM";
-        this.lblCRM.Size = new System.Drawing.Size(38, 19);
-        this.lblCRM.TabIndex = 3;
-        this.lblCRM.Text = "CRM";
-
+        // 
+        lblCRM.AutoSize = true;
+        lblCRM.Font = new Font("Segoe UI", 10F);
+        lblCRM.ForeColor = Color.Gray;
+        lblCRM.Location = new Point(20, 115);
+        lblCRM.Name = "lblCRM";
+        lblCRM.Size = new Size(39, 19);
+        lblCRM.TabIndex = 3;
+        lblCRM.Text = "CRM";
+        // 
+        // lblEspecialidade
+        // 
+        lblEspecialidade.AutoSize = true;
+        lblEspecialidade.Font = new Font("Segoe UI", 10F);
+        lblEspecialidade.ForeColor = Color.Gray;
+        lblEspecialidade.Location = new Point(20, 90);
+        lblEspecialidade.Name = "lblEspecialidade";
+        lblEspecialidade.Size = new Size(89, 19);
+        lblEspecialidade.TabIndex = 2;
+        lblEspecialidade.Text = "Especialidade";
+        // 
+        // lblNome
+        // 
+        lblNome.AutoSize = true;
+        lblNome.Font = new Font("Segoe UI", 14F);
+        lblNome.Location = new Point(20, 60);
+        lblNome.Name = "lblNome";
+        lblNome.Size = new Size(63, 25);
+        lblNome.TabIndex = 1;
+        lblNome.Text = "Nome";
+        // 
+        // lblTituloCartao
+        // 
+        lblTituloCartao.AutoSize = true;
+        lblTituloCartao.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+        lblTituloCartao.ForeColor = Color.FromArgb(41, 128, 185);
+        lblTituloCartao.Location = new Point(20, 20);
+        lblTituloCartao.Name = "lblTituloCartao";
+        lblTituloCartao.Size = new Size(159, 21);
+        lblTituloCartao.TabIndex = 0;
+        lblTituloCartao.Text = "Dados Profissionais";
+        // 
         // lblConsultas
-        this.lblConsultas.AutoSize = true;
-        this.lblConsultas.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-        this.lblConsultas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-        this.lblConsultas.Location = new System.Drawing.Point(30, 220);
-        this.lblConsultas.Name = "lblConsultas";
-        this.lblConsultas.Size = new System.Drawing.Size(183, 25);
-        this.lblConsultas.TabIndex = 1;
-        this.lblConsultas.Text = "Minhas Consultas";
-
-        // btnDarDiagnostico
-        this.btnDarDiagnostico.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-        this.btnDarDiagnostico.FlatAppearance.BorderSize = 0;
-        this.btnDarDiagnostico.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.btnDarDiagnostico.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-        this.btnDarDiagnostico.ForeColor = System.Drawing.Color.White;
-        this.btnDarDiagnostico.Location = new System.Drawing.Point(530, 215);
-        this.btnDarDiagnostico.Name = "btnDarDiagnostico";
-        this.btnDarDiagnostico.Size = new System.Drawing.Size(200, 35);
-        this.btnDarDiagnostico.TabIndex = 3;
-        this.btnDarDiagnostico.Text = "+ Inserir Diagnóstico";
-        this.btnDarDiagnostico.UseVisualStyleBackColor = false;
-        this.btnDarDiagnostico.Click += new System.EventHandler(this.btnDarDiagnostico_Click);
-
+        // 
+        lblConsultas.AutoSize = true;
+        lblConsultas.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+        lblConsultas.ForeColor = Color.FromArgb(50, 50, 50);
+        lblConsultas.Location = new Point(30, 220);
+        lblConsultas.Name = "lblConsultas";
+        lblConsultas.Size = new Size(167, 25);
+        lblConsultas.TabIndex = 1;
+        lblConsultas.Text = "Minhas Consultas";
+        // 
         // dgvPacientes
-        this.dgvPacientes.AllowUserToAddRows = false;
-        this.dgvPacientes.AllowUserToDeleteRows = false;
-        this.dgvPacientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-        this.dgvPacientes.BackgroundColor = System.Drawing.Color.White;
-        this.dgvPacientes.BorderStyle = System.Windows.Forms.BorderStyle.None;
-        this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        this.dgvPacientes.Location = new System.Drawing.Point(30, 260);
-        this.dgvPacientes.Name = "dgvPacientes";
-        this.dgvPacientes.ReadOnly = true;
-        this.dgvPacientes.RowHeadersVisible = false;
-        this.dgvPacientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-        this.dgvPacientes.Size = new System.Drawing.Size(700, 250);
-        this.dgvPacientes.TabIndex = 2;
-
+        // 
+        dgvPacientes.AllowUserToAddRows = false;
+        dgvPacientes.AllowUserToDeleteRows = false;
+        dgvPacientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        dgvPacientes.BackgroundColor = Color.White;
+        dgvPacientes.BorderStyle = BorderStyle.None;
+        dgvPacientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dgvPacientes.Location = new Point(30, 260);
+        dgvPacientes.Name = "dgvPacientes";
+        dgvPacientes.ReadOnly = true;
+        dgvPacientes.RowHeadersVisible = false;
+        dgvPacientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dgvPacientes.Size = new Size(700, 250);
+        dgvPacientes.TabIndex = 2;
+        // 
+        // btnDarDiagnostico
+        // 
+        btnDarDiagnostico.BackColor = Color.FromArgb(39, 174, 96);
+        btnDarDiagnostico.FlatAppearance.BorderSize = 0;
+        btnDarDiagnostico.FlatStyle = FlatStyle.Flat;
+        btnDarDiagnostico.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+        btnDarDiagnostico.ForeColor = Color.White;
+        btnDarDiagnostico.Location = new Point(530, 215);
+        btnDarDiagnostico.Name = "btnDarDiagnostico";
+        btnDarDiagnostico.Size = new Size(200, 35);
+        btnDarDiagnostico.TabIndex = 3;
+        btnDarDiagnostico.Text = "+ Inserir Diagnóstico";
+        btnDarDiagnostico.UseVisualStyleBackColor = false;
+        btnDarDiagnostico.Click += btnDarDiagnostico_Click;
+        // 
         // FormMedico
-        this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(780, 540);
-        this.Controls.Add(this.btnDarDiagnostico);
-        this.Controls.Add(this.dgvPacientes);
-        this.Controls.Add(this.lblConsultas);
-        this.Controls.Add(this.panelCard);
-        this.Name = "FormMedico";
-        this.Text = "Área do Médico";
-        this.panelCard.ResumeLayout(false);
-        this.panelCard.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
-        this.ResumeLayout(false);
-        this.PerformLayout();
+        // 
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(780, 540);
+        Controls.Add(btnDarDiagnostico);
+        Controls.Add(dgvPacientes);
+        Controls.Add(lblConsultas);
+        Controls.Add(panelCard);
+        Name = "FormMedico";
+        Text = "Área do Médico";
+        panelCard.ResumeLayout(false);
+        panelCard.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)dgvPacientes).EndInit();
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     private System.Windows.Forms.Panel panelCard;

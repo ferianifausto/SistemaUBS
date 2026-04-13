@@ -7,16 +7,18 @@ namespace SistemaUBS.Domain.Entities;
 public class Medico
 {
     public int Id { get; set; }
+    public string CRM { get; set; }
     public string Nome { get; set; }
     public string Especialidade { get; set; }
     public int UsuarioId { get; set; }
 
     public Medico() { }
-    public Medico(string nome, string especialidade, int usuarioId)
+    public Medico(string nome, string especialidade, int usuarioId, string crm)
     {
         Nome = nome;
         Especialidade = especialidade;
         UsuarioId = usuarioId;
+        CRM = crm;
     }
 
     private List<string> Validar()
@@ -28,6 +30,7 @@ public class Medico
 
         if (string.IsNullOrEmpty(Especialidade))
             erros.Add("A especialidade é obrigatória");
+
 
         return erros;
     }
