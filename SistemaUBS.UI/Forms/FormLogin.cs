@@ -5,13 +5,13 @@ namespace SistemaUBS.UI.Forms;
 
 public partial class FormLogin : Form
 {
-    private readonly UsuarioService _usuarioService;
+    private readonly AutenticacaoService _autenticacaoService;
 
     public FormLogin()
     {
         InitializeComponent();
 
-        _usuarioService = new UsuarioService(new UsuarioRepository());
+        _autenticacaoService = new AutenticacaoService(new UsuarioRepository());
 
         ConfigurarTela();
     }
@@ -38,18 +38,20 @@ public partial class FormLogin : Form
 
         try
         {
-            var (usuario, erros) = await _usuarioService.LoginAsync(login, senha);
+            var (sucesso, mensagem) = await _autenticacaoService.AutenticarAsync(login, senha);
 
-            if (erros.Any())
+            if (!sucesso)
             {
-                MessageBox.Show(string.Join("\n", erros), "Erro de Login",
+                MessageBox.Show(mensagem, "Erro de Login",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            var usuario = _autenticacaoService.UsuarioLogado;
+
             if (usuario == null)
             {
-                MessageBox.Show("Usuário não encontrado.", "Erro",
+                MessageBox.Show("Erro ao recuperar usuário logado.", "Erro",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

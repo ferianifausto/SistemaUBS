@@ -1,80 +1,99 @@
 ﻿using Microsoft.Data.SqlClient;
-using SistemaUBS.Domain.Constants;
-using SistemaUBS.Domain.Entities;
 using SistemaUBS.Application.Interfaces;
+using SistemaUBS.Domain.Entities;
 using SistemaUBS.Infrastructure;
+
+namespace SistemaUBS.Infrastructure.Repositories;
 
 public class UsuarioRepository : IUsuarioRepository
 {
     public async Task<Usuario?> ObterPorLoginAsync(string login)
     {
-        using var conn = DbConnectionFactory.Create();
-        await conn.OpenAsync();
+        const string sql = @"
+            SELECT Id, Login, SenhaHash, Tipo, DataCadastro, Ativo
+            FROM Usuarios
+            WHERE Login = @Login";
 
-        var query = @"SELECT Id, Login, SenhaHash, Tipo
-                      FROM Usuarios
-                      WHERE Login = @Login";
+        using var connection = DbConnectionFactory.Create();
+        using var command = new SqlCommand(sql, connection);
 
-        using var cmd = new SqlCommand(query, conn);
-        cmd.Parameters.AddWithValue("@Login", login);
+        command.Parameters.AddWithValue("@Login", login.ToLower().Trim());
 
-        using var reader = await cmd.ExecuteReaderAsync();
+        await connection.OpenAsync();
+        using var reader = await command.ExecuteReaderAsync();
 
         if (await reader.ReadAsync())
-        {
-            return new Usuario
-            {
-                Id = reader.GetInt32(0),
-                Login = reader.GetString(1),
-                SenhaHash = reader.GetString(2),
-                Tipo = reader.GetString(3)
-            };
-        }
+            return MapearUsuario(reader);
 
         return null;
     }
 
     public async Task InserirAsync(Usuario usuario)
     {
-        using var conn = DbConnectionFactory.Create();
-        await conn.OpenAsync();
+        const string sql = @"
+            INSERT INTO Usuarios (Login, SenhaHash, Tipo, DataCadastro, Ativo)
+            VALUES (@Login, @SenhaHash, @Tipo, @DataCadastro, @Ativo)";
 
-        var query = @"INSERT INTO Usuarios (Login, SenhaHash, Tipo)
-                      VALUES (@Login, @SenhaHash, @Tipo)";
+        using var connection = DbConnectionFactory.Create();
+        using var command = new SqlCommand(sql, connection);
 
-        using var cmd = new SqlCommand(query, conn);
-        cmd.Parameters.AddWithValue("@Login", usuario.Login);
-        cmd.Parameters.AddWithValue("@SenhaHash", usuario.SenhaHash);
-        cmd.Parameters.AddWithValue("@Tipo", usuario.Tipo);
+        command.Parameters.AddWithValue("@Login", usuario.Login.ToLower().Trim());
+        command.Parameters.AddWithValue("@SenhaHash", usuario.SenhaHash);
+        command.Parameters.AddWithValue("@Tipo", usuario.Tipo);
+        command.Parameters.AddWithValue("@DataCadastro", usuario.DataCadastro);
+        command.Parameters.AddWithValue("@Ativo", usuario.Ativo);
 
-        await cmd.ExecuteNonQueryAsync();
+        await connection.OpenAsync();
+        await command.ExecuteNonQueryAsync();
+    }
+
+    public async Task<bool> LoginExisteAsync(string login)
+    {
+        const string sql = "SELECT COUNT(*) FROM Usuarios WHERE Login = @Login";
+
+        using var connection = DbConnectionFactory.Create();
+        using var command = new SqlCommand(sql, connection);
+
+        command.Parameters.AddWithValue("@Login", login.ToLower().Trim());
+
+        await connection.OpenAsync();
+
+        var count = Convert.ToInt32(await command.ExecuteScalarAsync());
+        return count > 0;
     }
 
     public async Task<List<Usuario>> ListarAsync()
     {
         var lista = new List<Usuario>();
 
-        using var conn = DbConnectionFactory.Create();
-        await conn.OpenAsync();
+        const string sql = @"
+            SELECT Id, Login, SenhaHash, Tipo, DataCadastro, Ativo
+            FROM Usuarios";
 
-        var query = @"SELECT Id, Login, Senha, Tipo
-                  FROM Usuarios";
+        using var connection = DbConnectionFactory.Create();
+        using var command = new SqlCommand(sql, connection);
 
-        using var cmd = new SqlCommand(query, conn);
-        using var reader = await cmd.ExecuteReaderAsync();
+        await connection.OpenAsync();
+        using var reader = await command.ExecuteReaderAsync();
 
         while (await reader.ReadAsync())
         {
-            lista.Add(new Usuario(
-                reader.GetString(1), // Login
-                reader.GetString(2), // Senha
-                reader.GetString(3)  // Tipo
-            )
-            {
-                Id = reader.GetInt32(0)
-            });
+            lista.Add(MapearUsuario(reader));
         }
 
         return lista;
+    }
+
+    private static Usuario MapearUsuario(SqlDataReader reader)
+    {
+        return new Usuario
+        {
+            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+            Login = reader.GetString(reader.GetOrdinal("Login")),
+            SenhaHash = reader.GetString(reader.GetOrdinal("SenhaHash")),
+            Tipo = reader.GetString(reader.GetOrdinal("Tipo")),
+            DataCadastro = reader.GetDateTime(reader.GetOrdinal("DataCadastro")),
+            Ativo = reader.GetBoolean(reader.GetOrdinal("Ativo"))
+        };
     }
 }

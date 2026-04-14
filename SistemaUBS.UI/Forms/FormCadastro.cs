@@ -7,7 +7,7 @@ namespace SistemaUBS.UI.Forms;
 public partial class FormCadastro : Form
 {
     private readonly FormLogin _formLogin;
-    private readonly UsuarioService _usuarioService;
+    private readonly AutenticacaoService _autenticacaoService;
     private readonly UsuarioRepository _usuarioRepository;
     private readonly PacienteRepository _pacienteRepository;
     private readonly MedicoRepository _medicoRepository;
@@ -17,7 +17,7 @@ public partial class FormCadastro : Form
         InitializeComponent();
 
         _formLogin = formLogin;
-        _usuarioService = new UsuarioService(new UsuarioRepository());
+        _autenticacaoService = new AutenticacaoService(new UsuarioRepository());
         _usuarioRepository = new UsuarioRepository();
         _pacienteRepository = new PacienteRepository();
         _medicoRepository = new MedicoRepository();
@@ -87,9 +87,14 @@ public partial class FormCadastro : Form
 
         try
         {
-            var usuario = new Usuario(login, senha, tipo);
+            var (sucesso, mensagem) = await _autenticacaoService.RegistrarUsuarioAsync(login, senha, tipo);
 
-            await _usuarioService.CadastrarAsync(usuario);
+            if (!sucesso)
+            {
+                MessageBox.Show(mensagem, "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             var usuarioCriado = await _usuarioRepository.ObterPorLoginAsync(login);
 
